@@ -1,12 +1,13 @@
 package Source;
 
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class AddRowJTable extends javax.swing.JFrame {
 
     DefaultTableModel dtm;
     Object[] o = new Object[3];
-    int filaSeleccinada;
+    int filaSeleccionada = -1;
 
     public AddRowJTable() {
         initComponents();
@@ -182,15 +183,27 @@ public class AddRowJTable extends javax.swing.JFrame {
     }//GEN-LAST:event_txtEdadActionPerformed
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
-        // TODO add your handling code here:
+        if (filaSeleccionada != -1) {
+            tUsuario.setValueAt(txtNombre.getText(), filaSeleccionada, 0);
+            tUsuario.setValueAt(txtEdad.getText(), filaSeleccionada, 1);
+            tUsuario.setValueAt(txtEstado.getText(), filaSeleccionada, 2);
+            limpiar();
+            filaSeleccionada = -1;
+        } else {
+            JOptionPane.showMessageDialog(null, "No has cargado datos");
+        }
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
-        limpiar();
-        filaSeleccinada = tUsuario.getSelectedRow();
-        txtNombre.setText(tUsuario.getValueAt(filaSeleccinada, 0).toString());
-        txtEdad.setText(tUsuario.getValueAt(filaSeleccinada, 1).toString());
-        txtEstado.setText(tUsuario.getValueAt(filaSeleccinada, 2).toString());
+        filaSeleccionada = tUsuario.getSelectedRow();
+        if (filaSeleccionada != -1) {
+            limpiar();
+            txtNombre.setText(tUsuario.getValueAt(filaSeleccionada, 0).toString());
+            txtEdad.setText(tUsuario.getValueAt(filaSeleccionada, 1).toString());
+            txtEstado.setText(tUsuario.getValueAt(filaSeleccionada, 2).toString());
+        } else {
+            JOptionPane.showMessageDialog(null, "No has seleccinado una fila");
+        }
     }//GEN-LAST:event_btnSearchActionPerformed
 
     public void limpiar() {
