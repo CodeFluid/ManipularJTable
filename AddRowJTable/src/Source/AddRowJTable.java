@@ -2,13 +2,16 @@ package Source;
 
 import javax.swing.table.DefaultTableModel;
 
-public class AddRowJTable extends javax.swing.JFrame {    
-    
+public class AddRowJTable extends javax.swing.JFrame {
+
     DefaultTableModel dtm;
     Object[] o = new Object[3];
-    
+    int filaSeleccinada;
+
     public AddRowJTable() {
         initComponents();
+        setTitle("Manipular JTable");
+        setLocationRelativeTo(null);
         dtm = (DefaultTableModel) tUsuario.getModel();
     }
 
@@ -27,6 +30,7 @@ public class AddRowJTable extends javax.swing.JFrame {
         txtEstado = new javax.swing.JTextField();
         btnEdit = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
+        btnSearch = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -68,18 +72,40 @@ public class AddRowJTable extends javax.swing.JFrame {
         jLabel1.setText("NOMBRE:");
 
         txtNombre.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        txtNombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNombreActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("EDAD:");
 
         txtEdad.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        txtEdad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtEdadActionPerformed(evt);
+            }
+        });
 
         jLabel3.setText("ESTADO:");
 
         txtEstado.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
 
         btnEdit.setText("Modificar");
+        btnEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditActionPerformed(evt);
+            }
+        });
 
         btnDelete.setText("Eliminar");
+
+        btnSearch.setText("Buscar");
+        btnSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -88,6 +114,7 @@ public class AddRowJTable extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 547, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel2)
@@ -103,8 +130,8 @@ public class AddRowJTable extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnAdd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnEdit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnDelete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 547, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnDelete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -126,7 +153,9 @@ public class AddRowJTable extends javax.swing.JFrame {
                     .addComponent(txtEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnDelete))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnSearch)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -138,7 +167,38 @@ public class AddRowJTable extends javax.swing.JFrame {
         o[1] = txtEdad.getText();
         o[2] = txtEstado.getText();
         dtm.addRow(o);
+        for (int i = 0; i < o.length; i++) {
+            o[i] = "";
+        }
+        limpiar();
     }//GEN-LAST:event_btnAddActionPerformed
+
+    private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed
+        txtEdad.grabFocus();
+    }//GEN-LAST:event_txtNombreActionPerformed
+
+    private void txtEdadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEdadActionPerformed
+        txtEstado.grabFocus();
+    }//GEN-LAST:event_txtEdadActionPerformed
+
+    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEditActionPerformed
+
+    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+        limpiar();
+        filaSeleccinada = tUsuario.getSelectedRow();
+        txtNombre.setText(tUsuario.getValueAt(filaSeleccinada, 0).toString());
+        txtEdad.setText(tUsuario.getValueAt(filaSeleccinada, 1).toString());
+        txtEstado.setText(tUsuario.getValueAt(filaSeleccinada, 2).toString());
+    }//GEN-LAST:event_btnSearchActionPerformed
+
+    public void limpiar() {
+        txtNombre.setText("");
+        txtEdad.setText("");
+        txtEstado.setText("");
+        txtNombre.grabFocus();
+    }
 
     public static void main(String args[]) {
         try {
@@ -168,6 +228,7 @@ public class AddRowJTable extends javax.swing.JFrame {
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnEdit;
+    private javax.swing.JButton btnSearch;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
