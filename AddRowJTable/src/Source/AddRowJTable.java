@@ -100,6 +100,11 @@ public class AddRowJTable extends javax.swing.JFrame {
         });
 
         btnDelete.setText("Eliminar");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
 
         btnSearch.setText("Buscar");
         btnSearch.addActionListener(new java.awt.event.ActionListener() {
@@ -205,6 +210,14 @@ public class AddRowJTable extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "No has seleccinado una fila");
         }
     }//GEN-LAST:event_btnSearchActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        if (tUsuario.getSelectedRow() != -1) {
+            dtm.removeRow(tUsuario.getSelectedRow());
+        } else {
+            JOptionPane.showMessageDialog(null, "No has seleccionado un registro");
+        }
+    }//GEN-LAST:event_btnDeleteActionPerformed
 
     public void limpiar() {
         txtNombre.setText("");
